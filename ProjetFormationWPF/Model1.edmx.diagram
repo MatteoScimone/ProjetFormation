@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ad3419e7f7fb4c329303cd92841ace17" Name="Diagram1">
+        <EntityTypeShape EntityType="sncfModel.agent" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="sncfModel.formation" Width="1.5" PointX="6.375" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sncfModel.inscription" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="sncfModel.inscription_ibfk_1" ManuallyRouted="false" />
+        <AssociationConnector Association="sncfModel.inscription_ibfk_2" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
