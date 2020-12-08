@@ -34,9 +34,20 @@ namespace ProjetFormationWPF
         private void listFormation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+            listAgent.ItemsSource = gst1.agent.ToList();
         }
 
         private void listAgent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
+        private void cboAgent_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnPresent_Click(object sender, RoutedEventArgs e)
         {
 
         }

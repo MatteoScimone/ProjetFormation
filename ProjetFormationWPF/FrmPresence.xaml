@@ -42,14 +42,15 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding idAgent}" Width="50"></TextBlock>
-                                <TextBlock Text="{Binding nomAgent}" Width="130"></TextBlock>
+                                    <TextBlock Text="{Binding nomAgent}" Width="130"></TextBlock>
                                 <TextBlock Text="{Binding prenomAgent}" Width="70"></TextBlock>
-                                <TextBlock Text="{Binding villeAgent}" Width="70"></TextBlock>
+                                <CheckBox Content="" IsChecked="False" Name="cboAgent" Checked="cboAgent_Checked"></CheckBox>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
+            <Button Name="btnPresent" Content="Present" Grid.ColumnSpan="2" Margin="193,0.333,203.333,-0.333" Grid.Row="4" Click="btnPresent_Click"></Button>
         </Grid>
     </Grid>
 </Window>

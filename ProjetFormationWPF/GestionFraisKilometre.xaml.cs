@@ -22,6 +22,9 @@ namespace ProjetFormationWPF
     public partial class GestionFraisKilometre : Window
     {
         sncfEntities gst;
+        double montant;
+        int idFormation;
+        int idAgent;
         public GestionFraisKilometre()
         {
             InitializeComponent();
@@ -29,7 +32,15 @@ namespace ProjetFormationWPF
 
         private void lstFormation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            lstAgent.ItemsSource = gst.agent.ToList();
+            var tousLesAgents = gst.agent.ToList();
+            var lesInscriptionsDeLaFormation = gst.inscription.ToList().FindAll(i => i.numFormation == (lstFormation.SelectedItem as formation).idFormation);
+
+            lstAgent.ItemsSource = from lAgent in tousLesAgents
+                            // Any : test si ça contient les éléments;
+                        where !lesInscriptionsDeLaFormation.Any(ins => ins.numAgent == lAgent.idAgent)
+                        select lAgent;
+                       
+            
            
 
         }
@@ -42,7 +53,6 @@ namespace ProjetFormationWPF
 
         private async void  lstAgent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            double montant;
             HttpClient ws = new HttpClient();
             string reponse = await ws.GetStringAsync("https://fr.distance24.org/route.json?stops=" + (lstFormation.SelectedItem as formation).lieuFormation + "|" + (lstAgent.SelectedItem as agent).villeAgent);
             var json = JsonConvert.DeserializeObject<dynamic>(reponse);
@@ -65,11 +75,32 @@ namespace ProjetFormationWPF
             }
             else
             {
-                MessageBox.Show("L'inscription de votre agent a bien été effectuée ", "Votre choix", MessageBoxButton.OK, MessageBoxImage.Information);
-                if (lstFormation.SelectedItem !=null)
+                //MessageBox.Show("L'inscription de votre agent a bien été effectuée ", "Votre choix", MessageBoxButton.OK, MessageBoxImage.Information);
+                //inscription i = new inscription()
+                //{
+
+                //}
+                inscription insc = new inscription()
                 {
-                    lstAgent.SelectedItem = gst.agent.Add(inscription);
-                }
+                    numFormation = idFormation,
+                    numAgent = idAgent,
+                    presence = 0,
+                    nbKm = Convert.ToInt16(txtKilometre.Text)
+                };
+                gst.inscription.Add(insc);
+                gst.SaveChanges();
+                MessageBox.Show("L'inscription de votre agent \na bien été effectuée", "Insertion", MessageBoxButton.OK, MessageBoxImage.Information);
+                //lstAgent.ItemsSource = (from agt in gst.agent
+                //                         where !gst.inscription.Any(inscript => inscript.numAgent == agt.idAgent && inscript.numFormation == idFormation)
+                //                         select agt).ToList<agent>();
+                var tousLesAgentss = gst.agent.ToList();
+                var lesInscriptionsDeLaFormations = gst.inscription.ToList().FindAll(i => i.numFormation == (lstFormation.SelectedItem as formation).idFormation);
+
+                lstAgent.ItemsSource = from lAgents in tousLesAgentss
+                                           // Any : test si ça contient les éléments;
+                                       where !lesInscriptionsDeLaFormations.Any(ins => ins.numAgent == lAgents.idAgent)
+                                       select lAgents;
+
             }
         }
     }
